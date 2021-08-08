@@ -39,6 +39,7 @@ export const HomeStyled = styled.div<{}>`
     display: flex;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
     border-radius: 20px;
+    flex-shrink: 0;
     margin: 20px 0;
     overflow: hidden;
     input {
