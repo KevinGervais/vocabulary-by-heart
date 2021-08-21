@@ -29,8 +29,8 @@ export function VocabularyCategory({ category, _idMap, setHomeState, isBookmarks
         </h1>
         {category && (
           <div className="card-list">
-            {category.items.slice(0, 3).map(item => (
-              <div className="card-item">
+            {category.items.slice(0, 3).map((item, index) => (
+              <div className="card-item" key={index}>
                 {item.languageItems.ar.title.split("،")[0].split("+")[0].split(" ")[0]}
               </div>
             ))}
