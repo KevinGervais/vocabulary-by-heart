@@ -18,7 +18,7 @@ export const DiapositiveStyled = styled.div<DiapositiveStyledProps>`
     const colorName = colorList[index] as keyof AllColors
     const color = colors[colorName]
     return css`
-      background: ${color[window.theme.isDark ? 900 : 100]}${window.theme.isDark ? 22 : ""};
+      background: ${color[window.theme.isDark ? 700 : 100]}${window.theme.isDark ? 22 : ""};
       span, svg, input, h4, h3, .harakat div {
         color: ${color[window.theme.isDark ? 300 : 700]};
       }

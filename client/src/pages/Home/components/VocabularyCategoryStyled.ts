@@ -10,14 +10,14 @@ export const VocabularyCategoryStyled = styled.div<{}>`
   width: 23%;
   max-width: 500px;
   box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
-  background: ${() => window.theme.isDark ? window.theme.grey900 : "white"};
-  ${() => shadeEffect(window.theme.isDark ? "grey800" : "grey50", "background", !window.theme.isDark ? { incrementation: [50, 150] } : undefined)}
+  ${() => shadeEffect(window.theme.isDark ? "grey850" : "grey50", "background", { incrementation: [50, 150] })}
   h1 {
     display: flex;
     align-items: center;
     font-size: 20px;
     margin-bottom: 15px;
     text-align: center;
+    color: ${() => window.theme.isDark ? window.theme.grey300 : window.theme.grey700};
     & > svg {
       margin-left: 10px;
        height: 20px;
@@ -42,10 +42,11 @@ export const VocabularyCategoryStyled = styled.div<{}>`
     height: 40px;
     width: 60px;
     font-size: 24px;
+    color: ${() => window.theme.isDark ? window.theme.grey300 : window.theme.grey700};
     background: ${() => window.theme.isDark ? window.theme.grey800 : window.theme.grey200}55;
     backdrop-filter: blur(2px);
     border-radius: 5px;
-    border:  1px solid ${() => window.theme.isDark ? "black" : window.theme.secondary100};
+    border:  1px solid ${() => window.theme.isDark ? window.theme.secondary300 + "77" : window.theme.secondary100};
     &:first-child {
       z-index: 3;
       transform: scale(1.15);
@@ -65,8 +66,8 @@ export const VocabularyCategoryStyled = styled.div<{}>`
       font-size: 18px;
       margin-left: -15px;
       z-index: 0;
-      background: ${() => window.theme.isDark ? window.theme.grey800 : window.theme.secondary50};
-      color: ${() => window.theme.isDark ? window.theme.grey800 : window.theme.secondary200};
+      background: ${() => window.theme.isDark ? window.theme.secondary300 + "77" : window.theme.secondary50};
+      color: ${() => window.theme.isDark ? window.theme.secondary50 : window.theme.secondary200};
     }
   }
 
