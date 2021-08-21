@@ -1,22 +1,24 @@
 import { Languages, Say } from "@/languages/model"
-import { BookmarkItem, DiapositiveSettings, NotchPosition, SelectedCategory, VocabularyCategory, VocabularyItem } from "@/model"
+import { BookmarkItem, DiapositiveSettings, IdMap, NotchPosition, SelectedCategory, VocabularyCategory, VocabularyItem } from "@/model"
 import { AllColors } from "@/styles/model"
 import { PageNames } from "@/routes/model"
 import { Action } from "redux"
 
 
 export interface ReduxState {
-  readonly notchPosition: NotchPosition
-  readonly themeColor: keyof AllColors
-  readonly selectedLanguage: Languages
-  readonly say: Say
-  readonly page: PageNames
-  readonly selectedCategory?: SelectedCategory
-  readonly vocabularyCategoryList: VocabularyCategory[]
-  readonly selectedVocabularyItem?: VocabularyItem
-  readonly diapositiveSettings?: DiapositiveSettings
-  readonly bookmarks: BookmarkItem[]
-  readonly isDark: boolean
+  notchPosition: NotchPosition
+  themeColor: keyof AllColors
+  selectedLanguage: Languages
+  say: Say
+  page: PageNames
+  isAdmin: boolean
+  selectedCategory?: SelectedCategory
+  vocabularyCategoryList: VocabularyCategory[]
+  vocabularyCategoryMap: IdMap<VocabularyCategory>
+  selectedVocabularyItem?: VocabularyItem
+  diapositiveSettings?: DiapositiveSettings
+  bookmarks: BookmarkItem[]
+  isDark: boolean
 
 }
 

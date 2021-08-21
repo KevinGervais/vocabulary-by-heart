@@ -22,7 +22,7 @@ import { VocabularyItemStyled } from "./VocabularyItemStyled"
 
 export function VocabularyItemComponent(this: CategoryClass, props: VocabularyItemProps): JSX.Element | null {
   const { vocabularyItem, index } = props
-  const { selectedCategory, say, vocabularyCategoryList, selectedLanguage, bookmarks } = this.props
+  const { selectedCategory, say, vocabularyCategoryList, selectedLanguage, bookmarks, isAdmin } = this.props
   const {
     selectedTitle,
     arabicTitle,
@@ -86,7 +86,7 @@ export function VocabularyItemComponent(this: CategoryClass, props: VocabularyIt
               onClick={() => updateBookmarks(bookmarkIndex, selectedCategory._id, vocabularyItem._id)}
             />
           )}
-          {!isMultipleCategory && editingVocabularyIndex !== index && (
+          {!isMultipleCategory && isAdmin && editingVocabularyIndex !== index && (
             <>
               <PencilIcon data-tip={say.edit} onClick={() => this.setState({
                 editingVocabularyIndex: index,

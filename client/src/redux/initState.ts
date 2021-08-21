@@ -12,7 +12,9 @@ const selectedVocabularyItem = selectedVocabularyItemString ? JSON.parse(selecte
 
 
 export const initState: ReduxState = {
+  isAdmin: !!localStorage.getItem("isAdmin"),
   vocabularyCategoryList: [],
+  vocabularyCategoryMap: {},
   selectedCategory: undefined,
   themeColor: (localStorage.getItem("themeColor") as keyof AllColors | null) || "lightblue",
   diapositiveSettings,

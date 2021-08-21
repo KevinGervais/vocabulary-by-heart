@@ -1,13 +1,4 @@
-import { Languages, Say } from "@/languages/model"
-import { BookmarkItem, VocabularyCategory } from "@/model"
-
-export interface HomeProps {
-  readonly vocabularyCategoryList: VocabularyCategory[]
-  readonly selectedLanguage: Languages
-  readonly say: Say
-  readonly bookmarks: BookmarkItem[]
-}
-
+import { VocabularyCategory } from "@/model"
 export interface HomeState {
   readonly newCategoryTitle: string
   readonly isCreatingCategory: boolean
@@ -15,3 +6,11 @@ export interface HomeState {
 }
 
 export type IdMap = { [_id: string]: boolean | undefined }
+
+export interface VocabularyCategoryProps {
+  category?: VocabularyCategory
+  _idMap: IdMap
+  isBookmarks?: boolean
+  onClick?: () => void
+  setHomeState?: (obj: Partial<HomeState>) => void
+}

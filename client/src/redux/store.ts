@@ -1,4 +1,4 @@
-import { pullVocabulary } from "@/functions"
+import { listToMap, pullVocabulary } from "@/functions"
 import { createStore, Store, Action } from "redux"
 
 import { initState } from "./initState"
@@ -11,6 +11,9 @@ export const store: Store = createStore(
       const setAction: SetAction = action as SetAction
       if (!setAction.data) {
         return currentState
+      }
+      if (setAction.data.vocabularyCategoryList) {
+        setAction.data.vocabularyCategoryMap = listToMap(setAction.data.vocabularyCategoryList)
       }
       if (setAction.data.page) {
         window.localStorage.setItem("page", setAction.data.page)

@@ -80,3 +80,7 @@ export interface DiapositiveSettings {
 }
 
 export type RequestPaths = "category" | "vocabulary" | "vocabularyDeleted"
+
+export interface IdMap<Item> {
+  [_id: string]: Item | undefined
+}

@@ -1,15 +1,4 @@
-import { Languages, Say } from "@/languages/model"
-import { BookmarkItem, diapositiveDelay, DiapositiveSettings, SelectedCategory, SpeechLanguages, VocabularyCategory, VocabularyItem } from "@/model"
-
-export interface CategoryProps {
-  readonly say: Say
-  readonly selectedCategory?: SelectedCategory
-  readonly vocabularyCategoryList: VocabularyCategory[]
-  readonly diapositiveSettings?: DiapositiveSettings
-  readonly selectedLanguage: Languages
-  readonly bookmarks: BookmarkItem[]
-}
-
+import { diapositiveDelay, VocabularyItem } from "@/model"
 export interface CategoryState {
   readonly isCreatingVocabulary: boolean
   readonly isBottomMenuOpened: boolean

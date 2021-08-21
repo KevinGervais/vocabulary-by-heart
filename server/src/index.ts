@@ -1,5 +1,5 @@
 import path from 'path'
-import express, { Express } from 'express'
+import express from 'express'
 import cors from 'cors'
 import { Db, MongoClient, MongoError } from 'mongodb'
 

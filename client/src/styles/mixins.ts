@@ -1,5 +1,8 @@
+import { IS_DESKTOP } from "@/constants"
 import { getOS } from "@/functions"
 import { css } from "styled-components"
+
+import { ShadeEffectOptions, Theme } from "./model"
 
 export const center: any = css`
   display: flex;
@@ -91,4 +94,59 @@ export function hexToHsla(hex: string, transparency: number): string {
   l = Math.round(l)
   h = Math.round(360 * h)
   return `hsla(${h}, ${s}%, ${l}%, ${transparency})`
+}
+
+
+export const shadeEffect = (
+  color: keyof Theme | "white",
+  type: "color" | "background" | "border-color",
+  options?: ShadeEffectOptions
+) => {
+  const { tags, isImportant, incrementation, whiteShadeType = "grey" } = options || {} as ShadeEffectOptions
+  const colorType = (color || "").replace(/[0-9]/g, "")
+  const colorIntensity = (color || "").replace(/[a-z]/g, "")
+  const isDecreasing: boolean = Number(colorIntensity) >= 700
+  let finalIncrementation: [number, number] = incrementation || [100, 200]
+  if (isDecreasing) {
+    finalIncrementation = finalIncrementation.map((num: number) => -num) as [number, number]
+  }
+  const colorHover = (
+    color === "white" ?
+      `${whiteShadeType}${finalIncrementation[0]}` :
+      `${colorType}${Number(colorIntensity) + finalIncrementation[0]}`
+  ) as keyof Theme
+  const colorActive = (
+    color === "white" ?
+      `${whiteShadeType}${finalIncrementation[1]}` :
+      `${colorType}${Number(colorIntensity) + finalIncrementation[1]}`
+  ) as keyof Theme
+  const tagListFinal = tags ? tags : ["&"]
+  const finalTags = tagListFinal.map((tag: string) => tag === "&" ? "&" : `& ${tag}`).join(", ")
+  const tagsHover = tagListFinal.map((tag: string) => tag === "&" ? "&:hover" : `&:hover ${tag}`).join(", ")
+  const tagsActive = tagListFinal.map((tag: string) => tag === "&" ? "&:active" : `&:active ${tag}`).join(", ")
+  const importantTag = isImportant ? " !important" : ""
+  if (IS_DESKTOP) {
+    return css`
+    ${clickable}
+      ${finalTags} {
+        ${`${type}: ${color === "white" ? color : window.theme[color]}${importantTag};`}
+      }
+      ${tagsHover} {
+        ${`${type}: ${window.theme[colorHover]}${importantTag};`}
+      }
+      ${tagsActive} {
+        ${`${type}: ${window.theme[colorActive]}${importantTag};`}
+      }
+    `
+  } else {
+    return css`
+      ${clickable}
+      ${finalTags} {
+        ${`${type}: ${color === "white" ? color : window.theme[color]}${importantTag};`}
+      }
+      ${tagsActive} {
+        ${`${type}: ${window.theme[colorHover]}${importantTag};`}
+      }
+    `
+  }
 }

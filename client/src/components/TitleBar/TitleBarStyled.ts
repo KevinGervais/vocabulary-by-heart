@@ -12,7 +12,7 @@ export const TitleBarStyled = styled.div<TitleBarStyledProps>`
   display: flex;
   width: 100%;
   height: calc(50px + ${() => getNotch("top")});
-  padding-bottom: 5px;
+  padding-bottom: 10px;
   background-size: 150px;
   -webkit-app-region: drag;
   flex-shrink: 0;

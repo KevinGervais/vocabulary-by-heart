@@ -1,8 +1,8 @@
-import { getOS } from "@/functions"
-import { center, clickable } from "@/styles/mixins"
-import styled, { css } from "styled-components"
+import { center, clickable, shadeEffect } from "@/styles/mixins"
+import styled from "styled-components"
 
 export const HomeStyled = styled.div<{}>`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -12,39 +12,34 @@ export const HomeStyled = styled.div<{}>`
   .add-button {
     ${center};
     ${clickable};
-    width: 300px;
-    height: 40px;
-    padding: 0 20px;
-    margin: 20px 0;
-    border-radius: 20px;
-    flex-shrink: 0;
-    background: ${() => window.theme.isDark ? window.theme.primary800 : window.theme.primary500};
-    color: ${() => window.theme.isDark ? window.theme.primary50 : "white"};
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
-    transition: 0.3s all ease-in-out;
-    ${() => ["mac", "windows"].includes(getOS()) && css`
-      &:hover {
-        transform: scale(1.025);
-      }
-    `}
-    &:active {
-      transform: scale(1.025);
-      background: ${() => window.theme.isDark ? window.theme.primary700 : window.theme.primary600};
+    ${() => shadeEffect(window.theme.isDark ? "secondary300" : "secondary500", "background")}
+    svg {
+      color: ${() => window.theme.isDark ? window.theme.primary50 : "white"};
+      height: 20px;
     }
   }
   .toggle {
     margin-left: 0px;
   }
   .input {
+    position: absolute;
+    left: 30px;
+    bottom: 30px;
     display: flex;
     box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
-    border-radius: 20px;
+    border-radius: 9999px;
     flex-shrink: 0;
-    margin: 20px 0;
     overflow: hidden;
     input {
       width: 200px;
-      height: 40px;
+      height: 50px;
       padding: 0 20px;
       background: ${() => window.theme.grey100};
       transition: 0.3s all ease-in-out;
@@ -59,37 +54,37 @@ export const HomeStyled = styled.div<{}>`
     svg {
       ${clickable};
       height: 20px;
-      padding: 10px 20px;
-      background: ${() => window.theme.primary500};
+      padding: 15px 20px;
       color: white;
-      ${() => ["mac", "windows"].includes(getOS()) && css`
-        &:hover {
-          background: ${() => window.theme.primary600};
-        }
-      `}
-      &:active {
-        background: ${() => window.theme.primary700};
-      }
+      ${() => shadeEffect(window.theme.isDark ? "secondary300" : "secondary500", "background")}
     }
   }
 
   .category-list {
-    background: ${() => window.theme.isDark ? window.theme.grey900 : "white"};
+    display: flex;
+    justify-content: space-evenly;
+    overflow: scroll;
+    flex-wrap: wrap;
     width: 100%;
-    max-width: 600px;
-    height: calc(100% -80px);
-    box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
+    padding-top: 20px;
+    padding-bottom: 100px;
   }
-  & > .fa-chevron-right {
-    position: fixed;
-    bottom: 30px;
+  .right-icon {
+    ${center};
+    ${clickable};
+    position: absolute;
     right: 30px;
-    width: 20px;
-    height: 20px;
-    padding: 15px;
-    box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
+    bottom: 30px;
+    width: 50px;
+    height: 50px;
     border-radius: 25px;
-    background: ${() => window.theme.isDark ? window.theme.primary300 : window.theme.secondary500};
+    box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
     color: white;
+    ${() => shadeEffect(window.theme.isDark ? "secondary300" : "secondary500", "background")}
+    svg {
+      margin-left: 5px;
+      color: ${() => window.theme.isDark ? window.theme.primary50 : "white"};
+      height: 20px;
+    }
   }
 `

@@ -3,7 +3,7 @@ import { center, clickable } from "@/styles/mixins"
 import styled, { css } from "styled-components"
 
 export const BottomMenuStyled = styled.div`
-  position: fixed;
+  position: absolute;
   bottom: 30px;
   right: 30px;
   box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);

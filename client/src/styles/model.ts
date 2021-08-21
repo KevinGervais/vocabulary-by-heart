@@ -97,3 +97,10 @@ export interface ColorItem {
   a400?: string
   a700?: string
 }
+
+export interface ShadeEffectOptions {
+  tags?: string[],
+  isImportant?: boolean,
+  whiteShadeType?: "primary" | "secondary" | "grey"
+  incrementation?: [number, number]
+}

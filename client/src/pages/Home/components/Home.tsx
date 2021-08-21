@@ -1,24 +1,21 @@
-import { VocabularyCategory } from "@/model"
 import { ReduxState } from "@/redux/model"
 import React from "react"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import RightArrowIcon from "@/images/rightArrow"
 import SaveIcon from "@/images/save"
 import CloseIcon from "@/images/close"
 import Tooltip from "react-tooltip"
-import { Toggle } from "@/components"
-import { setReduxState } from "@/redux"
-import BookmarkActiveIcon from "@/images/bookmarkActive"
+import PlusIcon from "@/images/plus"
 
-import { HomeProps, HomeState } from "../model"
+import { HomeState } from "../model"
 import { createVocabularyCategory, goToCategory, goToBookmarks } from "../functions"
-
 
 import { HomeStyled } from "./HomeStyled"
 import { VocabularyCategoryStyled } from "./VocabularyCategoryStyled"
+import { VocabularyCategory } from "./VocabularyCategory"
 
-export class HomeClass extends React.Component<HomeProps, HomeState> {
-  constructor(props: any) {
+export class HomeClass extends React.Component<ConnectedProps<typeof connector>, HomeState> {
+  constructor(props: HomeClass["props"]) {
     super(props)
     this.state = {
       newCategoryTitle: "",
@@ -29,16 +26,16 @@ export class HomeClass extends React.Component<HomeProps, HomeState> {
   }
 
   render(): JSX.Element {
-    const { vocabularyCategoryList, say, selectedLanguage, bookmarks } = this.props
+    const { vocabularyCategoryList, say, bookmarks, vocabularyCategoryMap, isAdmin } = this.props
     const { isCreatingCategory, newCategoryTitle, _idMap } = this.state
     return (
       <HomeStyled>
-        {!isCreatingCategory && (
+        {!isCreatingCategory && isAdmin && (
           <div className="add-button" onClick={() => this.setState({ isCreatingCategory: true })}>
-            {say.addCategory}
+            <PlusIcon />
           </div>
         )}
-        {isCreatingCategory && (
+        {isCreatingCategory && isAdmin && (
           <div className="input">
             <input
               placeholder={say.categoryPlacehoder}
@@ -56,37 +53,40 @@ export class HomeClass extends React.Component<HomeProps, HomeState> {
           </div>
         )}
         <div className="category-list">
-          {bookmarks.length !== 0 && <VocabularyCategoryStyled
-            onClick={() => goToBookmarks()}
-          >
-            <BookmarkActiveIcon />
-            <h1>{say.bookmarks}</h1>
-            <RightArrowIcon />
-          </VocabularyCategoryStyled>}
-          {vocabularyCategoryList.map((category: VocabularyCategory) => (
-            <VocabularyCategoryStyled
-              key={category._id}
-              onClick={() => setReduxState({ selectedCategory: category, page: "category" })}
-            >
-              <Toggle active={_idMap[category._id]} onChange={(evt: React.MouseEvent<HTMLDivElement>) => {
-                evt.stopPropagation()
-                this.setState({ _idMap: { ..._idMap, [category._id]: !_idMap[category._id] } })
-              }} />
-              <h1>{category.title[selectedLanguage] || say.category}</h1>
-              <RightArrowIcon />
-            </VocabularyCategoryStyled>
-          )
+          {bookmarks.length !== 0 && (
+            <VocabularyCategory
+              _idMap={_idMap}
+              isBookmarks
+              onClick={() => goToBookmarks()}
+            />
           )}
+          {vocabularyCategoryList.map(category => (
+            <VocabularyCategory
+              key={category._id}
+              category={category}
+              _idMap={_idMap}
+              setHomeState={data => this.setState(data as any)}
+            />
+          ))}
         </div>
-        {Object.values(_idMap).includes(true) && <RightArrowIcon onClick={() => goToCategory(_idMap)} />}
+        {Object.values(_idMap).includes(true) && (
+          <div className="right-icon" onClick={() => goToCategory(_idMap)}>
+            {Object.keys(_idMap).reduce((count, _id) => (
+              _idMap[_id] ? count + vocabularyCategoryMap[_id]!.items.length : count
+
+            ), 0)}
+            <RightArrowIcon />
+          </div>
+        )}
       </HomeStyled>
     )
   }
 }
-
-export const Home = connect((state: ReduxState): HomeProps => ({
+const connector = connect((state: ReduxState) => ({
   say: state.say,
+  isAdmin: state.isAdmin,
   vocabularyCategoryList: state.vocabularyCategoryList,
-  selectedLanguage: state.selectedLanguage,
+  vocabularyCategoryMap: state.vocabularyCategoryMap,
   bookmarks: state.bookmarks
-}))(HomeClass)
+}))
+export const Home = connector(HomeClass)

@@ -8,7 +8,8 @@ export const ToggleStyled = styled.div<ToggleStyledProps>`
     ${center}
     ${clickable}
     flex-direction: row;
-    margin: 0 20px;
+    margin-left: -10px !important;
+    padding: 20px 20px 20px 20px;
     color: ${() => window.theme.isDark ? window.theme.primary300 : window.theme.primary700};
     text-align: center;
     ${() => (getOS() === "mac" || getOS() === "windows") && css`
@@ -26,7 +27,6 @@ export const ToggleStyled = styled.div<ToggleStyledProps>`
         border-radius: 5px;
         transition: 0.1s font-size ease-in-out;
         font-size: 20px;
-        margin-right: 5px;
     }
 
     ${(props: ToggleStyledProps): any => props.active && css`

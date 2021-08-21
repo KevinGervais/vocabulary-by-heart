@@ -1,5 +1,5 @@
 import { getOS } from "@/functions"
-import { center, clickable } from "@/styles/mixins"
+import { center, clickable, shadeEffect } from "@/styles/mixins"
 import styled, { css } from "styled-components"
 
 import { CategoryStyledProps } from "../model"
@@ -11,17 +11,7 @@ export const CategoryStyled = styled.div<CategoryStyledProps>`
   align-items: center;
   width: 100%;
   height: 100%;
-  .add-button-wrapper {
-    ${center};
-    position: absolute;
-    background: hsla(0, 0%, 100%, 0.1);
-    width: 100%;
-    height: 80px;
-    flex-shrink: 0;
-    z-index: 1;
-    backdrop-filter: blur(2px);
-    border-bottom: 2px solid ${() => window.theme.isDark ? window.theme.primary800 : window.theme.primary200};
-  }
+
   .add-button {
     display: flex;
     align-items: center;
@@ -103,9 +93,30 @@ export const CategoryStyled = styled.div<CategoryStyledProps>`
     overflow: scroll;
     flex-wrap: wrap;
     width: 100%;
-    ${(props: CategoryStyledProps) => !props.isMultipleCategory && css`
-      padding-top: 80px;
-    `}
+    padding-top: 20px;
     padding-bottom: 100px;
+  }
+
+  .left-icons {
+    display: flex;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    & > div:not(:last-child) {
+      margin-right: 15px;
+    }
+    .plus-icon {
+      ${center};
+      ${clickable};
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+      box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
+      ${() => shadeEffect(window.theme.isDark ? "secondary300" : "secondary500", "background")}
+      svg {
+        color: ${() => window.theme.isDark ? window.theme.primary50 : "white"};
+        height: 20px;
+      }
+    }
   }
 `

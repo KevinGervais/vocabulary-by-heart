@@ -1,6 +1,6 @@
 import { ReduxState } from "@/redux/model"
 import React from "react"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import PlusIcon from "@/images/plus"
 import SaveIcon from "@/images/save"
 import CloseIcon from "@/images/close"
@@ -16,7 +16,7 @@ import { SpeechLanguages, VocabularyItem } from "@/model"
 import { Toggle } from "@/components"
 import Tooltip from "react-tooltip"
 
-import { CategoryProps, CategoryState, CreatedLanguageItemProps, HarakatProps, VocabularyItemProps } from "../model"
+import { CategoryState, CreatedLanguageItemProps, HarakatProps, VocabularyItemProps } from "../model"
 import * as functions from "../functions"
 
 import { CategoryStyled } from "./CategoryStyled"
@@ -29,7 +29,7 @@ import { Harakat } from "./Harakat"
 
 export const speechLanguages: SpeechLanguages[] = ["fr", "ar", "en"]
 
-export class CategoryClass extends React.Component<CategoryProps, CategoryState> {
+export class CategoryClass extends React.Component<ConnectedProps<typeof connector>, CategoryState> {
   titleSpeech?: SpeechRecognition
   titleRecorder?: any
   titleReader?: FileReader
@@ -41,7 +41,7 @@ export class CategoryClass extends React.Component<CategoryProps, CategoryState>
   arabicInputRef?: HTMLInputElement | null
   selectedInputRef?: HTMLInputElement | null
 
-  constructor(props: CategoryProps) {
+  constructor(props: CategoryClass["props"]) {
     super(props)
     this.CreatedLanguageItem = CreatedLanguageItem.bind(this)
     this.VocabularyItemComponent = VocabularyItemComponent.bind(this)
@@ -69,7 +69,7 @@ export class CategoryClass extends React.Component<CategoryProps, CategoryState>
 
   }
 
-  componentDidUpdate(oldProps: CategoryProps, oldState: CategoryState): void {
+  componentDidUpdate(oldProps: CategoryClass["props"], oldState: CategoryState): void {
     const { selectedCategory } = this.props
     const { isCreatingVocabulary, editingVocabularyIndex } = this.state
     if (!oldProps.selectedCategory && selectedCategory) {
@@ -87,7 +87,7 @@ export class CategoryClass extends React.Component<CategoryProps, CategoryState>
   }
 
   render(): JSX.Element | null {
-    const { selectedCategory, say, selectedLanguage } = this.props
+    const { selectedCategory, say, selectedLanguage, isAdmin } = this.props
     const {
       isCreatingVocabulary,
       isBottomMenuOpened,
@@ -119,20 +119,6 @@ export class CategoryClass extends React.Component<CategoryProps, CategoryState>
           }
         }}
       >
-        {!isMultipleCategory &&
-          <div className="add-button-wrapper">
-            <div className="add-button" onClick={() => {
-              this.setState({
-                ...functions.getInitialState(true) as CategoryState,
-                isCreatingVocabulary: true,
-                editingVocabularyIndex: -1
-              })
-            }}>
-              {say.addVocabulary}
-              <PlusIcon />
-            </div>
-          </div>
-        }
         {isCreatingVocabulary && (
           <div className="create-vocabulary-wrapper">
             <div className="create-vocabulary">
@@ -272,30 +258,45 @@ export class CategoryClass extends React.Component<CategoryProps, CategoryState>
             {isBottomMenuOpened && <PlayIcon data-tip={say.playDiapositive} />}
           </div>
         </BottomMenuStyled>}
-        {!isMultipleCategory && (
-          <DeleteButtonStyled onClick={(evt: React.MouseEvent<HTMLDivElement>) => evt.stopPropagation()} >
-            <div className="left-content" onClick={() => this.setState({ isAskingDelete: !isAskingDelete })}>
-              <DeleteIcon />
-            </div>
-            {isAskingDelete && (
-              <div className="right-content">
-                {say.askDelete}
-                <div onClick={() => functions.deleteCategory()}>{say.yes}</div>
+        {!isMultipleCategory && isAdmin && (
+          <div className="left-icons">
+            <DeleteButtonStyled onClick={(evt: React.MouseEvent<HTMLDivElement>) => evt.stopPropagation()} >
+              <div className="left-content" onClick={() => this.setState({ isAskingDelete: !isAskingDelete })}>
+                <DeleteIcon />
               </div>
-            )}
-          </DeleteButtonStyled>
+              {isAskingDelete && (
+                <div className="right-content">
+                  {say.askDelete}
+                  <div onClick={() => functions.deleteCategory()}>{say.yes}</div>
+                </div>
+              )}
+            </DeleteButtonStyled>
+            <div
+              className="plus-icon"
+              onClick={() => {
+                this.setState({
+                  ...functions.getInitialState(true) as CategoryState,
+                  isCreatingVocabulary: true,
+                  editingVocabularyIndex: -1
+                })
+              }}
+            >
+              <PlusIcon />
+            </div>
+          </div>
         )}
         <Tooltip effect="solid" place="left" />
       </CategoryStyled>
     )
   }
 }
-
-export const Category = connect((state: ReduxState): CategoryProps => ({
+const connector = connect((state: ReduxState) => ({
   say: state.say,
+  isAdmin: state.isAdmin,
   selectedCategory: state.selectedCategory,
   selectedLanguage: state.selectedLanguage,
   vocabularyCategoryList: state.vocabularyCategoryList,
   diapositiveSettings: state.diapositiveSettings,
   bookmarks: state.bookmarks,
-}))(CategoryClass)
+}))
+export const Category = connector(CategoryClass)

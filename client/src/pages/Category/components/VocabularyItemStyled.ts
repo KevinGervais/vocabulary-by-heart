@@ -2,12 +2,12 @@ import { getOS } from "@/functions"
 import { center, clickable } from "@/styles/mixins"
 import styled, { css } from "styled-components"
 
-export const VocabularyItemStyled = styled.div`
+export const VocabularyItemStyled = styled.div<{}>`
   display: flex;
   align-items: center;
   padding:10px;
   border-radius: 10px;
-  margin: 20px 0;
+  margin: 15px 0;
   width: 30%;
   max-width: 500px;
   box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);

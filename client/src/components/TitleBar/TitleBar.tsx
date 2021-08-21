@@ -1,5 +1,5 @@
 import React from "react"
-import { connect } from "react-redux"
+import { connect, ConnectedProps } from "react-redux"
 import { ReduxState } from "@/redux/model"
 import RightArrowIcon from "@/images/rightArrow"
 import { setReduxState } from "@/redux"
@@ -9,10 +9,10 @@ import SaveIcon from "@/images/save"
 import { editCategoryTitle } from "@/pages/Category/functions"
 
 import { TitleBarStyled } from "./TitleBarStyled"
-import { TitleBarProps, TitleBarState } from "./model"
+import { TitleBarState } from "./model"
 
-class TitleBarClass extends React.Component<TitleBarProps, TitleBarState> {
-  constructor(props: TitleBarProps) {
+class TitleBarClass extends React.Component<ConnectedProps<typeof connector>, TitleBarState> {
+  constructor(props: TitleBarClass["props"]) {
     super(props)
     this.state = {
       isFullScreen: window.innerHeight === window.screen.height,
@@ -33,7 +33,7 @@ class TitleBarClass extends React.Component<TitleBarProps, TitleBarState> {
     }
   }
 
-  public componentDidUpdate(oldProps: TitleBarProps): void {
+  public componentDidUpdate(oldProps: TitleBarClass["props"]): void {
     const { page } = this.props
     const { isEditingCategory } = this.state
     if (oldProps.page !== page && isEditingCategory) {
@@ -46,7 +46,7 @@ class TitleBarClass extends React.Component<TitleBarProps, TitleBarState> {
 
   public render(): JSX.Element | null {
     const { isEditingCategory, categoryTitle } = this.state
-    const { page, say, selectedCategory, selectedLanguage, selectedVocabularyItem } = this.props
+    const { page, say, selectedCategory, selectedLanguage, selectedVocabularyItem, isAdmin } = this.props
     if (page === "home") {
       return (
         <TitleBarStyled page={page}>
@@ -79,7 +79,7 @@ class TitleBarClass extends React.Component<TitleBarProps, TitleBarState> {
             <TitleBarStyled page={page}>
               <div onClick={() => setReduxState({ page: "home" })}><RightArrowIcon /></div>
               <h1>{selectedCategory.title[selectedLanguage]}</h1>
-              {!isMultipleCategory && (
+              {!isMultipleCategory && isAdmin && (
                 <PencilIcon onClick={() => this.setState({ isEditingCategory: true, categoryTitle: selectedCategory.title[selectedLanguage] })} />
               )}
             </TitleBarStyled>
@@ -104,12 +104,13 @@ class TitleBarClass extends React.Component<TitleBarProps, TitleBarState> {
     return <TitleBarStyled page={page} />
   }
 }
-
-export const TitleBar = connect((state: ReduxState): TitleBarProps => ({
+const connector = connect((state: ReduxState) => ({
   themeColor: state.themeColor,
   page: state.page,
   say: state.say,
+  isAdmin: state.isAdmin,
   selectedCategory: state.selectedCategory,
   selectedLanguage: state.selectedLanguage,
   selectedVocabularyItem: state.selectedVocabularyItem
-}))(TitleBarClass)
+}))
+export const TitleBar = connector(TitleBarClass)
