@@ -1,10 +1,11 @@
 import { getOS } from "@/functions"
-import { clickable, ellipsis, getNotch } from "@/styles/mixins"
+import { center, clickable, ellipsis, getNotch } from "@/styles/mixins"
 import styled, { css } from "styled-components"
 
 import { TitleBarStyledProps } from "./model"
 
 export const TitleBarStyled = styled.div<TitleBarStyledProps>`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: flex-end;
@@ -19,6 +20,18 @@ export const TitleBarStyled = styled.div<TitleBarStyledProps>`
   background: ${() => window.theme.isDark ? window.theme.primary300 : window.theme.primary500};
   box-shadow: 0 0 5px hsla(0, 0%, 0%, 0.3);
   transition: all 0.3s ease-in-out;
+  .sound-credits {
+    ${center};
+    font-size: 13px;
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    padding: 0 10px;
+    height: 20px;
+    border-radius: 5px 0 0 0;
+    background: ${() => window.theme.isDark ? window.theme.primary900 : window.theme.primary300}99;
+    color: ${() => window.theme.isDark ? window.theme.primary50 : window.theme.primary900};
+  }
   h1 {
     ${ellipsis};
     font-size: 24px;

@@ -51,6 +51,7 @@ class TitleBarClass extends React.Component<ConnectedProps<typeof connector>, Ti
       return (
         <TitleBarStyled page={page}>
           <h1>{say.home}</h1>
+          <span className="sound-credits">{say.soundCredits}</span>
         </TitleBarStyled>
       )
     } else if (page === "category") {

@@ -37,5 +37,7 @@ export const fr: Say = {
   bookmarks: "Signets",
   askDeleteVocabulary: "Êtes-vous sûr de vouloir supprimer ce vocabulaire?",
   searchQuranVerses: "Versets utilisant ce mot",
-  versesTitle: "Versets Coraniques correspondants à {word}"
+  versesTitle: "Versets Coraniques correspondants à {word}",
+  soundCredits: "Sons crédités par https://code.responsivevoice.org"
+
 }

@@ -35,6 +35,7 @@ export const en = {
   bookmarks: "Bookmarks",
   askDeleteVocabulary: "Are you sure you want to delete this vocabulary?",
   searchQuranVerses: "Verses using this word",
-  versesTitle: "Quranic verses matching with {word}"
+  versesTitle: "Quranic verses matching with {word}",
+  soundCredits: "Credited sounds with https://code.responsivevoice.org"
 
 }
