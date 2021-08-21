@@ -11,7 +11,6 @@ import { HomeState } from "../model"
 import { createVocabularyCategory, goToCategory, goToBookmarks } from "../functions"
 
 import { HomeStyled } from "./HomeStyled"
-import { VocabularyCategoryStyled } from "./VocabularyCategoryStyled"
 import { VocabularyCategory } from "./VocabularyCategory"
 
 export class HomeClass extends React.Component<ConnectedProps<typeof connector>, HomeState> {
