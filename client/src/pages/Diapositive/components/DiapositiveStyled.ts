@@ -27,15 +27,15 @@ export const DiapositiveStyled = styled.div<DiapositiveStyledProps>`
       }
       ${props.index === 0 && css`
         .content > svg:first-child {
-          color: ${color[window.theme.isDark ? 700 : 200]} !important;
-          border: 3px solid ${color[window.theme.isDark ? 700 : 200]};
+          color: ${color[window.theme.isDark ? 700 : 200]}${window.theme.isDark ? 77 : ""} !important;
+          border: 3px solid ${color[window.theme.isDark ? 700 : 200]}${window.theme.isDark ? 77 : ""};
           pointer-events: none;
         }
       `}
       ${props.index === props.indexCount - 1 && css`
         .content > svg:last-child {
-          color: ${color[window.theme.isDark ? 700 : 200]} !important;
-          border: 3px solid ${color[window.theme.isDark ? 700 : 200]};
+          color: ${color[window.theme.isDark ? 700 : 200]}${window.theme.isDark ? 77 : ""} !important;
+          border: 3px solid ${color[window.theme.isDark ? 700 : 200]}${window.theme.isDark ? 77 : ""};
           pointer-events: none;
         }
       `}

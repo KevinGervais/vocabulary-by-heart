@@ -18,6 +18,7 @@ export class DiapositiveClass extends React.Component<DiapositiveProps, Diaposit
   constructor(props: DiapositiveProps) {
     super(props)
     const { selectedCategory, diapositiveSettings } = props
+    this.handleKeyDown = this.handleKeyDown.bind(this)
     if (!selectedCategory || !diapositiveSettings) {
       this.state = {
         currentIndex: 0,
@@ -31,8 +32,23 @@ export class DiapositiveClass extends React.Component<DiapositiveProps, Diaposit
       }
       this.items = getDiapositiveItems()
     }
+    window.addEventListener("keydown", this.handleKeyDown)
   }
-
+  handleKeyDown(evt: KeyboardEvent): void {
+    const { currentIndex } = this.state
+    if (evt.key === "ArrowLeft") {
+      if (currentIndex !== 0) {
+        this.setState({ currentIndex: currentIndex - 1 })
+      }
+    } else if (evt.key === "ArrowRight") {
+      if (currentIndex !== this.items.length - 1) {
+        this.setState({ currentIndex: currentIndex + 1 })
+      }
+    }
+  }
+  componentWillUnmount(): void {
+    window.removeEventListener("keydown", this.handleKeyDown)
+  }
 
 
   UNSAFE_componentWillUpdate(newProps: DiapositiveProps): void {
