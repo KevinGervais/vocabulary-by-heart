@@ -8,6 +8,7 @@
   },
   "scripts": {
     "start": "cd ./server; yarn start",
-    "build": "cd ./client; yarn; yarn build; cd ../server; yarn; yarn build"
+    "build": "cd ./client; yarn; yarn build; cd ../server; yarn; yarn build",
+    "deploy": "git checkout deploy; git pull origin master; git stage .; git commit -m'merged master into deploy'; git push origin deploy; git checkout master"
   }
 }
